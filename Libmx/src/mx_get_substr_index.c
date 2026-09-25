@@ -15,6 +15,7 @@ int mx_get_substr_index(const char *str, const char *sub) {
             if (!(*sub))
                 return i;
         }
+        str = c;
         sub = temp;
         i++;
     }

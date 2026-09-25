@@ -6,7 +6,7 @@
 #include "unistd.h"
 #include "stdlib.h"
 #include "stdbool.h"
-#include "malloc/malloc.h"
+#include "limits.h"
 #include "libmx.h"
 
 #define INVALID_USAGE "usage: ./pathfinder [filename]\n"
@@ -20,6 +20,7 @@ typedef struct s_pars {
     char **arr_pars1;
     int arr_count;
     int count_bridges;
+    long long total_distance;
     char **arr_bridges;
     int **matrix_dist;
     int **matrix_floyd;

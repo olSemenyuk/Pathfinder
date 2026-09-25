@@ -11,11 +11,16 @@ void mx_parser(char *argv[], t_pars *stct) {
 
     line1_is_not_valid(str[0]);
     stct->count_island = mx_atoi(str[0]);
+    if (stct->count_island == 0) {
+        mx_printerr(INVAlID_NUMBER_ISLAND);
+        exit(1);
+    }
     mx_create_matrix_dist(stct);
 
     stct->arr_pars = malloc((stct->count_island + 1) * sizeof(char*));
     stct->arr_count = 0;
     stct->count_bridges = 0;
+    stct->total_distance = 0;
     mx_stct_entr(stct, str);
     if (stct->arr_count != stct->count_island) {
         mx_printerr(INVAlID_NUMBER_ISLAND);
@@ -70,12 +75,17 @@ static void mx_write_to_matrix(t_pars *stct, char **temp) {
     int dist = mx_atoi(temp[2]);
     int count = stct->count_island;
 
+    stct->total_distance += dist;
+    if (stct->total_distance >= INT_MAX) {
+        mx_printerr(MAX_LENGTHS);
+        exit(1);
+    }
     stct->matrix_dist[mx_get_index(stct, temp[0])][mx_get_index(stct, temp[1])] = dist;
     stct->matrix_dist[mx_get_index(stct, temp[1])][mx_get_index(stct, temp[0])] = dist;
     for (int i = 0; i < count; i++) {
         for (int j = 0; j < count; j++) {
             if ((i != j) && (stct->matrix_dist[i][j] == 0))
-                stct->matrix_dist[i][j] = 214748;
+                stct->matrix_dist[i][j] = INT_MAX;
         }
     }
 }
