@@ -18,7 +18,7 @@ static void init_stack(t_pars *stct, t_backpath **stack, int i, int j) {
 
     if ((*stack) == NULL)
         exit(1);
-    (*stack)->path = malloc(sizeof(int) * temp + 1);
+    (*stack)->path = malloc(sizeof(int) * (temp + 1));
     (*stack)->size = 1;
     (*stack)->path[1] = i;
     (*stack)->path[0] = j;

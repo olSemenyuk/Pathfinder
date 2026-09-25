@@ -12,7 +12,7 @@ char **mx_pars_str(char *str, int i) {
     int countk = mx_count_symbol(str, ',');
     char **pr_str = (char**)malloc(4 * sizeof(char*));
 
-    if (t < 0 || k < 0 || s < 5 || countk > 1 || countt > 1)
+    if (t < 0 || k < 0 || t > k || s < 5 || countk > 1 || countt > 1)
         printerr_line(i);
     pr_str[0] = mx_strndup(str, t);
     pr_str[1] = mx_strndup((str + t + 1), (k - t - 1));
@@ -28,9 +28,7 @@ char **mx_pars_str(char *str, int i) {
         mx_printerr(MAX_LENGTHS);
         exit(1);
     }
-    else 
-        return pr_str;
-        mx_del_strarr(&pr_str);
+    return pr_str;
 }
 
 static bool check_name(char *str) {
@@ -54,9 +52,12 @@ static bool check_dist(char *str) {
 }
 
 static bool max_dist(char *str) {
-    int dist = mx_atoi(str);
+    long long dist = 0;
 
-    if (dist >= 2147483647)
-        return false;
-    return true;
+    for (int i = 0; str[i]; i++) {
+        if (dist > (INT_MAX - (str[i] - '0')) / 10)
+            return false;
+        dist = dist * 10 + (str[i] - '0');
+    }
+    return dist > 0;
 }

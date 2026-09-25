@@ -6,6 +6,7 @@
 #include "unistd.h"
 #include "stdlib.h"
 #include "stdbool.h"
+#include "limits.h"
 #include "malloc/malloc.h"
 #include "libmx.h"
 
@@ -20,6 +21,7 @@ typedef struct s_pars {
     char **arr_pars1;
     int arr_count;
     int count_bridges;
+    long long total_distance;
     char **arr_bridges;
     int **matrix_dist;
     int **matrix_floyd;
